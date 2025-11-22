@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="STCDiT for High-Quality Video Super-Resolution">
+  <meta name="keywords" content="STCDiT, Motion-aware Reconstruction, Anchor-frame Guided Enhancement, High-Quality Video Super-Resolution">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>STCDiT</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./images/logo.svg"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <!-- Vendor Stylesheets -->
+  <!--=================js==========================-->
+  <link rel="stylesheet" href="./static/css/tab_gallery.css">
+  <link rel="stylesheet" href="./static/css/juxtapose.css">
+  <!-- <script src="./static/js/index.js"></script> -->
+  <!-- <link rel="stylesheet" href="./menlo"> -->
+  <link rel="stylesheet" href="./static/css/image_card_fader.css">
+  <link rel="stylesheet" href="./static/css/image_card_slider.css">
+
+  <!-- custom css file  -->
+  <link rel="stylesheet" href="./static/css/style.css">
+  <link rel="stylesheet" href="./static/css/twentytwenty.css">
+
+  <style>
+  .gradient-text {
+    background: linear-gradient(90deg, #ff7e5f, #feb47b, #ffcc70);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: bold;
+  }
+  </style>
+
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-widescreen">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            <font color="#fb5a42">STCDiT</font>: 
+            <font color="#fb5a42">S</font>patio-<font color="#fb5a42">T</font>emporally <font color="#fb5a42">C</font>onsistent <font color="#fb5a42">Di</font>ffusion <font color="#fb5a42">T</font>ransformer
+            <br>
+            for High-Quality Video Super-Resolution
+          </h1>
+          <div class="is-size-3 publication-authors">
+            <span class="author-block">
+              <a href="https://jychen9811.github.io/">Junyang Chen</a>,&nbsp
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=ruebFVEAAAAJ&hl=zh-CN">Jiangxin Dong</a>,&nbsp
+            </span>
+            <span class="author-block">
+              <a href="https://sunny2109.github.io/">Long Sun</a>,&nbsp
+            </span>
+            <span class="author-block">
+              <a href="https://yyang181.github.io/">Yixin Yang</a>,&nbsp
+            </span>
+            <span class="author-block">
+              <a href="https://jspan.github.io/">Jinshan Pan</a>,&nbsp
+            </span>
+          </div>
+
+          <div class="is-size-3 publication-authors">
+            <span class="author-block">IMAG, Nanjing University of Science and Technology </span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/JyChen9811/STCDiT"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+            </div>
+          </div>
+
+          <div class="is-size-4 notes">
+            <p style="color: #ec2222;">This webpage contains multiple ultra-high-definition videos, and they may load slowly. Please be patient, thanks!</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- first row -->
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.7000">
+            <div class="desc">Real-World</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="60%">
+                <source src="assets/Videos/VideoLQ_LQ/LQ_024.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="60%">
+                <source src="assets/Videos/VideoLQ_Restored/024.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.7000">
+            <div class="desc">Real-World</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="60%">
+                <source src="assets/Videos/VideoLQ_LQ/LQ_038.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="60%">
+                <source src="assets/Videos/VideoLQ_Restored/038.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.7000">
+            <div class="desc">Real-World</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="60%">
+                <source src="assets/Videos/VideoLQ_LQ/LQ_005.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="60%">
+                <source src="assets/Videos/VideoLQ_Restored/005.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.7000">
+            <div class="desc">Real-World</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="60%">
+                <source src="assets/Videos/VideoLQ_LQ/LQ_039.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="60%">
+                <source src="assets/Videos/VideoLQ_Restored/039.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.7000">
+            <div class="desc">Real-World</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="60%">
+                <source src="assets/Videos/VideoLQ_LQ/LQ_041.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="60%">
+                <source src="assets/Videos/VideoLQ_Restored/041.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.7000">
+            <div class="desc">Real-World</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="60%">
+                <source src="assets/Videos/VideoLQ_LQ/LQ_029.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="60%">
+                <source src="assets/Videos/VideoLQ_Restored/029.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.7000">
+            <div class="desc">Real-World</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="60%">
+                <source src="assets/Videos/VideoLQ_LQ/LQ_031.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="60%">
+                <source src="assets/Videos/VideoLQ_Restored/031.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+      </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-fifty-sixths">
+      <!-- <div class="column"> -->
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p style="font-size: 1.5em;">
+              We present STCDiT, a video super-resolution framework built upon a pre-trained video diffusion model, aiming to restore structurally faithful and temporally stable videos from degraded inputs, even under complex camera motions.
+              The main challenges lie in maintaining temporal stability during reconstruction and preserving structural fidelity during generation.
+              To address these challenges, we first develop a motion-aware VAE reconstruction method that performs segment-wise reconstruction, with each segment clip exhibiting uniform motion characteristic, thereby effectively handling videos with complex camera motions.
+              Moreover, we observe that the first-frame latent extracted by the VAE encoder in each clip, termed the anchor-frame latent, remains unaffected by temporal compression and retains richer spatial structural information than subsequent frame latents.
+              We further develop an anchor-frame guidance approach that leverages structural information from anchor frames to constrain the generation process and improve structural fidelity of video features.
+              Coupling these two designs enables the video diffusion model to achieve high-quality video super-resolution.
+              Extensive experiments show that STCDiT outperforms state-of-the-art methods in terms of structural fidelity and temporal consistency.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+<!-- 上面：文字 Motivation 区块 -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="container">
+        <h2 class="title is-3">Motivation</h2>
+        <div class="content has-text-justified">
+          <!-- 这里写你的文字内容 -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 下面：单独一块只展示图片 -->
+<section class="hero is-small">
+  <!-- <div class="hero-body second-body"> -->
+    <div class="container">
+      <img src="./assets/images/Motivation.png" />
+    </div>
+    
+  <!-- </div> -->
+</section>
+
+
+
+<!-- 上面：文字 Motivation 区块 -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="container">
+        <h2 class="title is-3">Method</h2>
+        <div class="content has-text-justified">
+          <!-- 这里写你的文字内容 -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 下面：单独一块只展示图片 -->
+<section class="hero is-small">
+  <!-- <div class="hero-body second-body"> -->
+    <div class="container">
+      <img src="./assets/images/Pipeline.png" />
+    </div>
+    
+  <!-- </div> -->
+</section>
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="container">
+        <h2 class="title is-3">Quantitative results</h2>
+        <div class="content has-text-justified">
+          <!-- 这里写你的文字内容 -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 下面：单独一块只展示图片 -->
+<section class="hero is-small">
+  <!-- <div class="hero-body second-body"> -->
+    <div class="container">
+      <img src="./assets/images/Results.png" />
+    </div>
+    
+  <!-- </div> -->
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="container">
+        <h2 class="title is-3">Qualitative results</h2>
+        <div class="content has-text-justified">
+          <!-- 这里写你的文字内容 -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  
+
+<!-- 下面：单独一块只展示图片 -->
+<section class="hero is-small">
+  <!-- <div class="hero-body second-body"> -->
+    <div class="container">
+      <img src="./assets/images/visualization.jpg" />
+    </div>
+    
+  <!-- </div> -->
+</section>
+
+
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+
+      <div class="columns is-centered has-text-centered title is-5">Real-world videos</div>
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+            <source src="assets/Comp_video/comparison_005.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="assets/Comp_video/comparison_024_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="assets/Comp_video/comparison_024_2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="assets/Comp_video/comparison_041.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="assets/Comp_video/comparison_043.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="assets/Comp_video/comparison_013_tiny.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="assets/Comp_video/comparison_039_tiny.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="assets/Comp_video/Sports_comparison_001_tiny.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+<footer class="footer">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <div class="columns is-centered"><p style="font-size: 1.5em;">
+            This website template is borrowed from <a href="https://csbhr.github.io/projects/vivid-vr/" target="_blank">source code</a>. 
+            Thank you!
+          </p></div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</footer>
+
+
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="./static/js/jquery.event.move.js"></script>
+  <script src="./static/js/jquery.twentytwenty.js"></script>
+  <script>
+  $(function(){
+    $(".twentytwenty-container").twentytwenty();
+  });
+  </script>
+
+
+
+</body>
+</html>
